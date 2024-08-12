@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    kotlin("jvm")
 }
 
 repositories {
@@ -21,7 +21,7 @@ configurations {
             attributes.attribute(Attribute.of("org.gradle.jvm.environment", String::class.java), "standard-jvm")
             attributes.attribute(Attribute.of("org.jetbrains.kotlin.platform.type", String::class.java), "jvm")
 
-            attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, project.objects.named("composed-jar"))
+            attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, project.objects.named(LibraryElements::class.java, "composed-jar"))
         }
     }
 }
@@ -36,7 +36,7 @@ tasks {
         from(zipTree(jar.flatMap { it.archiveFile }))
         from(file("marker_composed.txt"))
         dependsOn(jar)
-
-        project.artifacts.add("composedJar", this)
     }
 }
+
+project.artifacts.add("composedJar", tasks.named("composeJar"))
