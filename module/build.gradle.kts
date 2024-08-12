@@ -10,6 +10,7 @@ configurations {
     register("composedJar") {
         isCanBeConsumed = true
         isCanBeResolved = false
+        isVisible = false
 
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, project.objects.named(Bundling.EXTERNAL))
